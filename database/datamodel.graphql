@@ -1,0 +1,34 @@
+#Java'sproject
+type Expense{
+    id: ID! @unique
+    exp_name: String!
+    exp_amt: Float!
+    author: Category!
+}
+
+#Jordan'sproject
+type Category{
+    id: ID! @unique
+    categoryName: String! @unique
+    budgAmountPerCat: Float!
+    expenses: [Expense!]!
+    author: Budget!
+}
+
+#Mike'sproject
+type Budget{
+    id: ID! @unique
+    title: String!
+    budgetedAmount: Float!
+    categories: [Category!]!
+    author: User!
+}
+
+#Zach'sproject
+type User{
+    id: ID! @unique
+    email: String! @unique
+    password: String!
+    name: String!
+    budgets: [Budget!]!
+}

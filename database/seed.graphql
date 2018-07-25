@@ -1,0 +1,96 @@
+mutation {
+    createUser(data: {
+        email: "developer@example.com"
+        password: "$2a$10$hACwQ5/HQI6FhbIISOUVeusy3sKyUDhSq36fF5d/54aAdiygJPFzm" # plaintext password: "nooneknows"
+        name: "Budgeter"
+        budgets: {
+            create: [{
+                title: "Food Budget"
+                budgetedAmount: 200.50
+                categories: {
+                    create: [{
+                        categoryName: "Groceries"
+                        budgAmountPerCat: 80.25
+                        expenses: {
+                            create: [{
+                                exp_name: "General Groceries"
+                                exp_amt: 60.15
+                            }, {
+                                exp_name: "Treats"
+                                exp_amt: 15.79
+                            }]
+                        }
+                    }, {
+                        categoryName: "Eating Out"
+                        budgAmountPerCat: 100.00
+                        expenses: {
+                            create: [{
+                                exp_name: "McDonalds"
+                                exp_amt: 5.72
+                            }, {
+                                exp_name: "Burger King"
+                                exp_amt: 4.29
+                            },{
+                                exp_name: "Water Moon"
+                                exp_amt: 25.17
+                            }]
+                        }
+                    }]
+                }
+            }, {
+                title: "Car Budget"
+                budgetedAmount: 390.17
+                categories: {
+                    create: [{
+                        categoryName: "Gas"
+                        budgAmountPerCat: 100.00
+                        expenses: {
+                            create: [{
+                                exp_name: "Chevron"
+                                exp_amt: 14.20
+                            }, {
+                                exp_name: "Maverick"
+                                exp_amt: 20.00
+                            }]
+                        }
+                    }, {
+                        categoryName: "Maint."
+                        budgAmountPerCat: 200.00
+                        expenses: {
+                            create: [{
+                                exp_name: "Air Freshner"
+                                exp_amt: 2.32
+                            }, {
+                                exp_name: "Oil Change"
+                                exp_amt: 90.12
+                            },{
+                                exp_name: "Car Wash"
+                                exp_amt: 12.98
+                            }]
+                        }
+                    }]
+                }
+            }, {
+                title: "Other Budget"
+                budgetedAmount: 420.66
+                categories: {
+                    create: [{
+                        categoryName: "Entertainment"
+                        budgAmountPerCat: 100.00
+                        expenses: {
+                            create: [{
+                                exp_name: "Movies"
+                                exp_amt: 30.24
+                            }, {
+                                exp_name: "RedBox"
+                                exp_amt: 4.20
+                            }]
+                        }
+                    }]
+                }
+            }]
+        }
+    }) {
+        id
+    }
+}

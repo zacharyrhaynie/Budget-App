@@ -1,0 +1,1246 @@
+# source: https://us1.prisma.sh/zachary-haynie-61ba65/budgetAppBackEnd/dev
+# timestamp: Wed Jul 25 2018 11:22:18 GMT-0600 (MDT)
+
+type AggregateBudget {
+  count: Int!
+}
+
+type AggregateCategory {
+  count: Int!
+}
+
+type AggregateExpense {
+  count: Int!
+}
+
+type AggregateUser {
+  count: Int!
+}
+
+type BatchPayload {
+  """The number of nodes that have been affected by the Batch operation."""
+  count: Long!
+}
+
+type Budget implements Node {
+  id: ID!
+  title: String!
+  budgetedAmount: Float!
+  categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category!]
+  author(where: UserWhereInput): User!
+}
+
+"""A connection to a list of items."""
+type BudgetConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [BudgetEdge]!
+  aggregate: AggregateBudget!
+}
+
+input BudgetCreateInput {
+  title: String!
+  budgetedAmount: Float!
+  categories: CategoryCreateManyWithoutAuthorInput
+  author: UserCreateOneWithoutBudgetsInput!
+}
+
+input BudgetCreateManyWithoutAuthorInput {
+  create: [BudgetCreateWithoutAuthorInput!]
+  connect: [BudgetWhereUniqueInput!]
+}
+
+input BudgetCreateOneWithoutCategoriesInput {
+  create: BudgetCreateWithoutCategoriesInput
+  connect: BudgetWhereUniqueInput
+}
+
+input BudgetCreateWithoutAuthorInput {
+  title: String!
+  budgetedAmount: Float!
+  categories: CategoryCreateManyWithoutAuthorInput
+}
+
+input BudgetCreateWithoutCategoriesInput {
+  title: String!
+  budgetedAmount: Float!
+  author: UserCreateOneWithoutBudgetsInput!
+}
+
+"""An edge in a connection."""
+type BudgetEdge {
+  """The item at the end of the edge."""
+  node: Budget!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum BudgetOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  budgetedAmount_ASC
+  budgetedAmount_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type BudgetPreviousValues {
+  id: ID!
+  title: String!
+  budgetedAmount: Float!
+}
+
+type BudgetSubscriptionPayload {
+  mutation: MutationType!
+  node: Budget
+  updatedFields: [String!]
+  previousValues: BudgetPreviousValues
+}
+
+input BudgetSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BudgetSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BudgetSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BudgetSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: BudgetWhereInput
+}
+
+input BudgetUpdateInput {
+  title: String
+  budgetedAmount: Float
+  categories: CategoryUpdateManyWithoutAuthorInput
+  author: UserUpdateOneWithoutBudgetsInput
+}
+
+input BudgetUpdateManyWithoutAuthorInput {
+  create: [BudgetCreateWithoutAuthorInput!]
+  connect: [BudgetWhereUniqueInput!]
+  disconnect: [BudgetWhereUniqueInput!]
+  delete: [BudgetWhereUniqueInput!]
+  update: [BudgetUpdateWithWhereUniqueWithoutAuthorInput!]
+  upsert: [BudgetUpsertWithWhereUniqueWithoutAuthorInput!]
+}
+
+input BudgetUpdateOneWithoutCategoriesInput {
+  create: BudgetCreateWithoutCategoriesInput
+  connect: BudgetWhereUniqueInput
+  delete: Boolean
+  update: BudgetUpdateWithoutCategoriesDataInput
+  upsert: BudgetUpsertWithoutCategoriesInput
+}
+
+input BudgetUpdateWithoutAuthorDataInput {
+  title: String
+  budgetedAmount: Float
+  categories: CategoryUpdateManyWithoutAuthorInput
+}
+
+input BudgetUpdateWithoutCategoriesDataInput {
+  title: String
+  budgetedAmount: Float
+  author: UserUpdateOneWithoutBudgetsInput
+}
+
+input BudgetUpdateWithWhereUniqueWithoutAuthorInput {
+  where: BudgetWhereUniqueInput!
+  data: BudgetUpdateWithoutAuthorDataInput!
+}
+
+input BudgetUpsertWithoutCategoriesInput {
+  update: BudgetUpdateWithoutCategoriesDataInput!
+  create: BudgetCreateWithoutCategoriesInput!
+}
+
+input BudgetUpsertWithWhereUniqueWithoutAuthorInput {
+  where: BudgetWhereUniqueInput!
+  update: BudgetUpdateWithoutAuthorDataInput!
+  create: BudgetCreateWithoutAuthorInput!
+}
+
+input BudgetWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BudgetWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BudgetWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BudgetWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+  budgetedAmount: Float
+
+  """All values that are not equal to given value."""
+  budgetedAmount_not: Float
+
+  """All values that are contained in given list."""
+  budgetedAmount_in: [Float!]
+
+  """All values that are not contained in given list."""
+  budgetedAmount_not_in: [Float!]
+
+  """All values less than the given value."""
+  budgetedAmount_lt: Float
+
+  """All values less than or equal the given value."""
+  budgetedAmount_lte: Float
+
+  """All values greater than the given value."""
+  budgetedAmount_gt: Float
+
+  """All values greater than or equal the given value."""
+  budgetedAmount_gte: Float
+  categories_every: CategoryWhereInput
+  categories_some: CategoryWhereInput
+  categories_none: CategoryWhereInput
+  author: UserWhereInput
+}
+
+input BudgetWhereUniqueInput {
+  id: ID
+}
+
+type Category implements Node {
+  id: ID!
+  categoryName: String!
+  budgAmountPerCat: Float!
+  expenses(where: ExpenseWhereInput, orderBy: ExpenseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Expense!]
+  author(where: BudgetWhereInput): Budget!
+}
+
+"""A connection to a list of items."""
+type CategoryConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CategoryEdge]!
+  aggregate: AggregateCategory!
+}
+
+input CategoryCreateInput {
+  categoryName: String!
+  budgAmountPerCat: Float!
+  expenses: ExpenseCreateManyWithoutAuthorInput
+  author: BudgetCreateOneWithoutCategoriesInput!
+}
+
+input CategoryCreateManyWithoutAuthorInput {
+  create: [CategoryCreateWithoutAuthorInput!]
+  connect: [CategoryWhereUniqueInput!]
+}
+
+input CategoryCreateOneWithoutExpensesInput {
+  create: CategoryCreateWithoutExpensesInput
+  connect: CategoryWhereUniqueInput
+}
+
+input CategoryCreateWithoutAuthorInput {
+  categoryName: String!
+  budgAmountPerCat: Float!
+  expenses: ExpenseCreateManyWithoutAuthorInput
+}
+
+input CategoryCreateWithoutExpensesInput {
+  categoryName: String!
+  budgAmountPerCat: Float!
+  author: BudgetCreateOneWithoutCategoriesInput!
+}
+
+"""An edge in a connection."""
+type CategoryEdge {
+  """The item at the end of the edge."""
+  node: Category!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CategoryOrderByInput {
+  id_ASC
+  id_DESC
+  categoryName_ASC
+  categoryName_DESC
+  budgAmountPerCat_ASC
+  budgAmountPerCat_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type CategoryPreviousValues {
+  id: ID!
+  categoryName: String!
+  budgAmountPerCat: Float!
+}
+
+type CategorySubscriptionPayload {
+  mutation: MutationType!
+  node: Category
+  updatedFields: [String!]
+  previousValues: CategoryPreviousValues
+}
+
+input CategorySubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CategorySubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CategorySubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CategorySubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CategoryWhereInput
+}
+
+input CategoryUpdateInput {
+  categoryName: String
+  budgAmountPerCat: Float
+  expenses: ExpenseUpdateManyWithoutAuthorInput
+  author: BudgetUpdateOneWithoutCategoriesInput
+}
+
+input CategoryUpdateManyWithoutAuthorInput {
+  create: [CategoryCreateWithoutAuthorInput!]
+  connect: [CategoryWhereUniqueInput!]
+  disconnect: [CategoryWhereUniqueInput!]
+  delete: [CategoryWhereUniqueInput!]
+  update: [CategoryUpdateWithWhereUniqueWithoutAuthorInput!]
+  upsert: [CategoryUpsertWithWhereUniqueWithoutAuthorInput!]
+}
+
+input CategoryUpdateOneWithoutExpensesInput {
+  create: CategoryCreateWithoutExpensesInput
+  connect: CategoryWhereUniqueInput
+  delete: Boolean
+  update: CategoryUpdateWithoutExpensesDataInput
+  upsert: CategoryUpsertWithoutExpensesInput
+}
+
+input CategoryUpdateWithoutAuthorDataInput {
+  categoryName: String
+  budgAmountPerCat: Float
+  expenses: ExpenseUpdateManyWithoutAuthorInput
+}
+
+input CategoryUpdateWithoutExpensesDataInput {
+  categoryName: String
+  budgAmountPerCat: Float
+  author: BudgetUpdateOneWithoutCategoriesInput
+}
+
+input CategoryUpdateWithWhereUniqueWithoutAuthorInput {
+  where: CategoryWhereUniqueInput!
+  data: CategoryUpdateWithoutAuthorDataInput!
+}
+
+input CategoryUpsertWithoutExpensesInput {
+  update: CategoryUpdateWithoutExpensesDataInput!
+  create: CategoryCreateWithoutExpensesInput!
+}
+
+input CategoryUpsertWithWhereUniqueWithoutAuthorInput {
+  where: CategoryWhereUniqueInput!
+  update: CategoryUpdateWithoutAuthorDataInput!
+  create: CategoryCreateWithoutAuthorInput!
+}
+
+input CategoryWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CategoryWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CategoryWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CategoryWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  categoryName: String
+
+  """All values that are not equal to given value."""
+  categoryName_not: String
+
+  """All values that are contained in given list."""
+  categoryName_in: [String!]
+
+  """All values that are not contained in given list."""
+  categoryName_not_in: [String!]
+
+  """All values less than the given value."""
+  categoryName_lt: String
+
+  """All values less than or equal the given value."""
+  categoryName_lte: String
+
+  """All values greater than the given value."""
+  categoryName_gt: String
+
+  """All values greater than or equal the given value."""
+  categoryName_gte: String
+
+  """All values containing the given string."""
+  categoryName_contains: String
+
+  """All values not containing the given string."""
+  categoryName_not_contains: String
+
+  """All values starting with the given string."""
+  categoryName_starts_with: String
+
+  """All values not starting with the given string."""
+  categoryName_not_starts_with: String
+
+  """All values ending with the given string."""
+  categoryName_ends_with: String
+
+  """All values not ending with the given string."""
+  categoryName_not_ends_with: String
+  budgAmountPerCat: Float
+
+  """All values that are not equal to given value."""
+  budgAmountPerCat_not: Float
+
+  """All values that are contained in given list."""
+  budgAmountPerCat_in: [Float!]
+
+  """All values that are not contained in given list."""
+  budgAmountPerCat_not_in: [Float!]
+
+  """All values less than the given value."""
+  budgAmountPerCat_lt: Float
+
+  """All values less than or equal the given value."""
+  budgAmountPerCat_lte: Float
+
+  """All values greater than the given value."""
+  budgAmountPerCat_gt: Float
+
+  """All values greater than or equal the given value."""
+  budgAmountPerCat_gte: Float
+  expenses_every: ExpenseWhereInput
+  expenses_some: ExpenseWhereInput
+  expenses_none: ExpenseWhereInput
+  author: BudgetWhereInput
+}
+
+input CategoryWhereUniqueInput {
+  id: ID
+  categoryName: String
+}
+
+type Expense implements Node {
+  id: ID!
+  exp_name: String!
+  exp_amt: Float!
+  author(where: CategoryWhereInput): Category!
+}
+
+"""A connection to a list of items."""
+type ExpenseConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ExpenseEdge]!
+  aggregate: AggregateExpense!
+}
+
+input ExpenseCreateInput {
+  exp_name: String!
+  exp_amt: Float!
+  author: CategoryCreateOneWithoutExpensesInput!
+}
+
+input ExpenseCreateManyWithoutAuthorInput {
+  create: [ExpenseCreateWithoutAuthorInput!]
+  connect: [ExpenseWhereUniqueInput!]
+}
+
+input ExpenseCreateWithoutAuthorInput {
+  exp_name: String!
+  exp_amt: Float!
+}
+
+"""An edge in a connection."""
+type ExpenseEdge {
+  """The item at the end of the edge."""
+  node: Expense!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ExpenseOrderByInput {
+  id_ASC
+  id_DESC
+  exp_name_ASC
+  exp_name_DESC
+  exp_amt_ASC
+  exp_amt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type ExpensePreviousValues {
+  id: ID!
+  exp_name: String!
+  exp_amt: Float!
+}
+
+type ExpenseSubscriptionPayload {
+  mutation: MutationType!
+  node: Expense
+  updatedFields: [String!]
+  previousValues: ExpensePreviousValues
+}
+
+input ExpenseSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ExpenseSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ExpenseSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ExpenseSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ExpenseWhereInput
+}
+
+input ExpenseUpdateInput {
+  exp_name: String
+  exp_amt: Float
+  author: CategoryUpdateOneWithoutExpensesInput
+}
+
+input ExpenseUpdateManyWithoutAuthorInput {
+  create: [ExpenseCreateWithoutAuthorInput!]
+  connect: [ExpenseWhereUniqueInput!]
+  disconnect: [ExpenseWhereUniqueInput!]
+  delete: [ExpenseWhereUniqueInput!]
+  update: [ExpenseUpdateWithWhereUniqueWithoutAuthorInput!]
+  upsert: [ExpenseUpsertWithWhereUniqueWithoutAuthorInput!]
+}
+
+input ExpenseUpdateWithoutAuthorDataInput {
+  exp_name: String
+  exp_amt: Float
+}
+
+input ExpenseUpdateWithWhereUniqueWithoutAuthorInput {
+  where: ExpenseWhereUniqueInput!
+  data: ExpenseUpdateWithoutAuthorDataInput!
+}
+
+input ExpenseUpsertWithWhereUniqueWithoutAuthorInput {
+  where: ExpenseWhereUniqueInput!
+  update: ExpenseUpdateWithoutAuthorDataInput!
+  create: ExpenseCreateWithoutAuthorInput!
+}
+
+input ExpenseWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ExpenseWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ExpenseWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ExpenseWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  exp_name: String
+
+  """All values that are not equal to given value."""
+  exp_name_not: String
+
+  """All values that are contained in given list."""
+  exp_name_in: [String!]
+
+  """All values that are not contained in given list."""
+  exp_name_not_in: [String!]
+
+  """All values less than the given value."""
+  exp_name_lt: String
+
+  """All values less than or equal the given value."""
+  exp_name_lte: String
+
+  """All values greater than the given value."""
+  exp_name_gt: String
+
+  """All values greater than or equal the given value."""
+  exp_name_gte: String
+
+  """All values containing the given string."""
+  exp_name_contains: String
+
+  """All values not containing the given string."""
+  exp_name_not_contains: String
+
+  """All values starting with the given string."""
+  exp_name_starts_with: String
+
+  """All values not starting with the given string."""
+  exp_name_not_starts_with: String
+
+  """All values ending with the given string."""
+  exp_name_ends_with: String
+
+  """All values not ending with the given string."""
+  exp_name_not_ends_with: String
+  exp_amt: Float
+
+  """All values that are not equal to given value."""
+  exp_amt_not: Float
+
+  """All values that are contained in given list."""
+  exp_amt_in: [Float!]
+
+  """All values that are not contained in given list."""
+  exp_amt_not_in: [Float!]
+
+  """All values less than the given value."""
+  exp_amt_lt: Float
+
+  """All values less than or equal the given value."""
+  exp_amt_lte: Float
+
+  """All values greater than the given value."""
+  exp_amt_gt: Float
+
+  """All values greater than or equal the given value."""
+  exp_amt_gte: Float
+  author: CategoryWhereInput
+}
+
+input ExpenseWhereUniqueInput {
+  id: ID
+}
+
+"""
+The `Long` scalar type represents non-fractional signed whole numeric values.
+Long can represent values between -(2^63) and 2^63 - 1.
+"""
+scalar Long
+
+type Mutation {
+  createExpense(data: ExpenseCreateInput!): Expense!
+  createCategory(data: CategoryCreateInput!): Category!
+  createBudget(data: BudgetCreateInput!): Budget!
+  createUser(data: UserCreateInput!): User!
+  updateExpense(data: ExpenseUpdateInput!, where: ExpenseWhereUniqueInput!): Expense
+  updateCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
+  updateBudget(data: BudgetUpdateInput!, where: BudgetWhereUniqueInput!): Budget
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  deleteExpense(where: ExpenseWhereUniqueInput!): Expense
+  deleteCategory(where: CategoryWhereUniqueInput!): Category
+  deleteBudget(where: BudgetWhereUniqueInput!): Budget
+  deleteUser(where: UserWhereUniqueInput!): User
+  upsertExpense(where: ExpenseWhereUniqueInput!, create: ExpenseCreateInput!, update: ExpenseUpdateInput!): Expense!
+  upsertCategory(where: CategoryWhereUniqueInput!, create: CategoryCreateInput!, update: CategoryUpdateInput!): Category!
+  upsertBudget(where: BudgetWhereUniqueInput!, create: BudgetCreateInput!, update: BudgetUpdateInput!): Budget!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  updateManyExpenses(data: ExpenseUpdateInput!, where: ExpenseWhereInput): BatchPayload!
+  updateManyCategories(data: CategoryUpdateInput!, where: CategoryWhereInput): BatchPayload!
+  updateManyBudgets(data: BudgetUpdateInput!, where: BudgetWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
+  deleteManyExpenses(where: ExpenseWhereInput): BatchPayload!
+  deleteManyCategories(where: CategoryWhereInput): BatchPayload!
+  deleteManyBudgets(where: BudgetWhereInput): BatchPayload!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+type Query {
+  expenses(where: ExpenseWhereInput, orderBy: ExpenseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Expense]!
+  categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category]!
+  budgets(where: BudgetWhereInput, orderBy: BudgetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Budget]!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  expense(where: ExpenseWhereUniqueInput!): Expense
+  category(where: CategoryWhereUniqueInput!): Category
+  budget(where: BudgetWhereUniqueInput!): Budget
+  user(where: UserWhereUniqueInput!): User
+  expensesConnection(where: ExpenseWhereInput, orderBy: ExpenseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ExpenseConnection!
+  categoriesConnection(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CategoryConnection!
+  budgetsConnection(where: BudgetWhereInput, orderBy: BudgetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BudgetConnection!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+}
+
+type Subscription {
+  expense(where: ExpenseSubscriptionWhereInput): ExpenseSubscriptionPayload
+  category(where: CategorySubscriptionWhereInput): CategorySubscriptionPayload
+  budget(where: BudgetSubscriptionWhereInput): BudgetSubscriptionPayload
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+}
+
+type User implements Node {
+  id: ID!
+  email: String!
+  password: String!
+  name: String!
+  budgets(where: BudgetWhereInput, orderBy: BudgetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Budget!]
+}
+
+"""A connection to a list of items."""
+type UserConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [UserEdge]!
+  aggregate: AggregateUser!
+}
+
+input UserCreateInput {
+  email: String!
+  password: String!
+  name: String!
+  budgets: BudgetCreateManyWithoutAuthorInput
+}
+
+input UserCreateOneWithoutBudgetsInput {
+  create: UserCreateWithoutBudgetsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutBudgetsInput {
+  email: String!
+  password: String!
+  name: String!
+}
+
+"""An edge in a connection."""
+type UserEdge {
+  """The item at the end of the edge."""
+  node: User!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum UserOrderByInput {
+  id_ASC
+  id_DESC
+  email_ASC
+  email_DESC
+  password_ASC
+  password_DESC
+  name_ASC
+  name_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type UserPreviousValues {
+  id: ID!
+  email: String!
+  password: String!
+  name: String!
+}
+
+type UserSubscriptionPayload {
+  mutation: MutationType!
+  node: User
+  updatedFields: [String!]
+  previousValues: UserPreviousValues
+}
+
+input UserSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: UserWhereInput
+}
+
+input UserUpdateInput {
+  email: String
+  password: String
+  name: String
+  budgets: BudgetUpdateManyWithoutAuthorInput
+}
+
+input UserUpdateOneWithoutBudgetsInput {
+  create: UserCreateWithoutBudgetsInput
+  connect: UserWhereUniqueInput
+  delete: Boolean
+  update: UserUpdateWithoutBudgetsDataInput
+  upsert: UserUpsertWithoutBudgetsInput
+}
+
+input UserUpdateWithoutBudgetsDataInput {
+  email: String
+  password: String
+  name: String
+}
+
+input UserUpsertWithoutBudgetsInput {
+  update: UserUpdateWithoutBudgetsDataInput!
+  create: UserCreateWithoutBudgetsInput!
+}
+
+input UserWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  email: String
+
+  """All values that are not equal to given value."""
+  email_not: String
+
+  """All values that are contained in given list."""
+  email_in: [String!]
+
+  """All values that are not contained in given list."""
+  email_not_in: [String!]
+
+  """All values less than the given value."""
+  email_lt: String
+
+  """All values less than or equal the given value."""
+  email_lte: String
+
+  """All values greater than the given value."""
+  email_gt: String
+
+  """All values greater than or equal the given value."""
+  email_gte: String
+
+  """All values containing the given string."""
+  email_contains: String
+
+  """All values not containing the given string."""
+  email_not_contains: String
+
+  """All values starting with the given string."""
+  email_starts_with: String
+
+  """All values not starting with the given string."""
+  email_not_starts_with: String
+
+  """All values ending with the given string."""
+  email_ends_with: String
+
+  """All values not ending with the given string."""
+  email_not_ends_with: String
+  password: String
+
+  """All values that are not equal to given value."""
+  password_not: String
+
+  """All values that are contained in given list."""
+  password_in: [String!]
+
+  """All values that are not contained in given list."""
+  password_not_in: [String!]
+
+  """All values less than the given value."""
+  password_lt: String
+
+  """All values less than or equal the given value."""
+  password_lte: String
+
+  """All values greater than the given value."""
+  password_gt: String
+
+  """All values greater than or equal the given value."""
+  password_gte: String
+
+  """All values containing the given string."""
+  password_contains: String
+
+  """All values not containing the given string."""
+  password_not_contains: String
+
+  """All values starting with the given string."""
+  password_starts_with: String
+
+  """All values not starting with the given string."""
+  password_not_starts_with: String
+
+  """All values ending with the given string."""
+  password_ends_with: String
+
+  """All values not ending with the given string."""
+  password_not_ends_with: String
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  budgets_every: BudgetWhereInput
+  budgets_some: BudgetWhereInput
+  budgets_none: BudgetWhereInput
+}
+
+input UserWhereUniqueInput {
+  id: ID
+  email: String
+}
