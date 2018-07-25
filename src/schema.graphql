@@ -1,32 +1,39 @@
-# import Post from "./generated/prisma.graphql"
+# import Budget from "./generated/prisma.graphql"
+# import Category from "./generated/prisma.graphql"
+# import Expense from "./generated/prisma.graphql"
 
 type Query {
-  feed: [Post!]!
-  drafts: [Post!]!
-  post(id: ID!): Post
-  me: User
+    budget(id: ID!): Budget
+    category(id: ID!): Category
+    expense(id:ID!): Expense
+    me: User
 }
 
 type Mutation {
-  signup(email: String!, password: String!, name: String!): AuthPayload!
-  login(email: String!, password: String!): AuthPayload!
-  createBudget(title: String!, budgetedAmount: Float!): Budget!
-  publish(id: ID!): Post!
-  deletePost(id: ID!): Post!
+    signup(email: String!, password: String!, name: String!): AuthPayload!
+    login(email: String!, password: String!): AuthPayload!
+    editUser(id: ID!): User!
+    beginBudget(title: String!, budgetedAmount: Float!): Budget!
+    startCategory(categoryName: String!, budgAmountPerCat: Float!): Category!
+    listExpense(exp_name: String!, exp_amt: Float!): Expense!
+    deleteBudget(id: ID!): Budget!
+    deleteCategory(id: ID!): Category!
+    deleteExpense(id: ID!): Expense!
+    deleteUser(id: ID!): User!
 }
 
-type Subscription {
-  feedSubscription: PostSubscriptionPayload!
-}
+#type Subscription {
+#    feedSubscription: PostSubscriptionPayload!
+#}
 
 type AuthPayload {
-  token: String!
-  user: User!
+    token: String!
+    user: User!
 }
 
 type User {
-  id: ID!
-  email: String!
-  name: String!
-  budgets: [Budget!]!
+    id: ID!
+    email: String!
+    name: String!
+    budgets: [Budget!]!
 }

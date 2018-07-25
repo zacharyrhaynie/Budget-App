@@ -1,31 +1,20 @@
-const { getUserId } = require('../utils')
+const {getUserId} = require('../utils')
 
 const Query = {
-  feed(parent, args, ctx, info) {
-    return ctx.db.query.posts({ where: { isPublished: true } }, info)
-  },
+    budget(parent, {id}, ctx, info) {
+        return ctx.db.query.budget({where: {id}}, info)
+    },
+    category(parent, {id}, ctx, info) {
+        return ctx.db.query.category({where: {id}}, info)
+    },
+    expense(parent, {id}, ctx, info) {
+        return ctx.db.query.expense({where: {id}}, info)
+    },
 
-  drafts(parent, args, ctx, info) {
-    const id = getUserId(ctx)
-
-    const where = {
-      isPublished: false,
-      author: {
-        id
-      }
-    }
-
-    return ctx.db.query.posts({ where }, info)
-  },
-
-  budget(parent, { id }, ctx, info) {
-    return ctx.db.query.budget({ where: { id } }, info)
-  },
-
-  me(parent, args, ctx, info) {
-    const id = getUserId(ctx)
-    return ctx.db.query.user({ where: { id } }, info)
-  },
+    me(parent, args, ctx, info) {
+        const id = getUserId(ctx)
+        return ctx.db.query.user({where: {id}}, info)
+    },
 }
 
-module.exports = { Query }
+module.exports = {Query}

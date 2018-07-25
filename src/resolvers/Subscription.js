@@ -1,10 +1,10 @@
-const Subscription = {
-  feedSubscription: {
-    subscribe: (parent, args, ctx, info) => {
-      return ctx.db.subscription.post({}, info)
-    },
-  },
-}
+// const Subscription = {
+//   feedSubscription: {
+//     subscribe: (parent, args, ctx, info) => {
+//       return ctx.db.subscription.budget({}, info)
+//     },
+//   },
+// }
 
 // This is the same subscription as above but only fires for 
 // posts that have been published.
@@ -26,5 +26,5 @@ const Subscription = {
 //     },
 //   },
 // }
-
-module.exports = { Subscription }
+//
+// module.exports = { Subscription }
